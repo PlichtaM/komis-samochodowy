@@ -1,0 +1,47 @@
+Create table pokoje(nr_pokoju int primary key, miejsca int, czy_dostepny varchar(1));
+
+
+Create table rezerwacje(nr_pokoju int , liczbaosob int , data_przyjazdu date, data_wyjazdu date check(data_wyjazdu> data_przyjazdu) ,
+PESEL char(11) check (length(PESEL)=11)  primary key);
+
+Create table goscie(
+					
+					imie varchar(20) NOT NULL ,
+					nazwisko varchar(20) not null, 
+					ulica  varchar(20) not null,
+					kod  varchar(6) not null,
+					miasto  varchar(20) not null,
+					PESEL char(11) primary key check (length(PESEL)=11) 
+
+			constraint pesel_check 
+	check (substring(PESEL,1,6) :: date > (NOW()::timestamp - interval '18 years') )
+);
+
+
+
+
+
+
+insert into pokoje values(1,4,'N');
+insert into pokoje values(101,2,'N');
+insert into pokoje values(102,2,'T');
+insert into pokoje values(201,3,'N');
+
+
+insert into goscie values ( 'Jan','Nowak','Jana Pawła II', '12-234','Poznań', 66071471636);
+insert into goscie values ( 'Anna','Kowalska','długa', '54-321','Warszawa', 44061608042);
+insert into goscie values ( 'Andrzej','Kolarz','krótka', '65-982','Kraków', 69030366834);
+
+insert into rezerwacje values(201,3,'2022-01-01','2022-01-03', 69030366834);
+insert into rezerwacje values(1,3,'2022-04-29','2022-05-04', 44061608042);
+insert into rezerwacje values(102,2,'2022-02-13','2022-02-15', 66071471636);
+
+
+select * from pokoje
+select * from goscie // select * from goscie natural join rezerwacje 
+select * from pokoje where czy_dostepny = 'T'
+
+
+
+
+
